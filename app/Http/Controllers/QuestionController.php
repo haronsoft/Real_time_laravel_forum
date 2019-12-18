@@ -15,17 +15,10 @@ class QuestionController extends Controller
     public function index()
     {
         //
+        return Question::latest()->get();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+  
 
     /**
      * Store a newly created resource in storage.
@@ -35,7 +28,9 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       // auth()->user()->question()->create($request->all());
+        Question::create($request->all());
+        return response('Created',200);
     }
 
     /**
@@ -47,6 +42,7 @@ class QuestionController extends Controller
     public function show(Question $question)
     {
         //
+        return $question;
     }
 
     /**
@@ -81,5 +77,7 @@ class QuestionController extends Controller
     public function destroy(Question $question)
     {
         //
+        $question->delete();
+        return response("Deleted",200);
     }
 }

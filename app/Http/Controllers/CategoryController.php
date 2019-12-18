@@ -15,6 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
         //
+        return category::latest()->get();
     }
 
     /**
@@ -36,6 +37,13 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
+        Category::create($request->all());
+         $category = new Category;
+         $category->name = $request->name;
+         $category->slug= str_slug($request->name);
+         $category->save();
+         return response('Created',200);
+
     }
 
     /**
@@ -47,6 +55,7 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         //
+        return $category;
     }
 
     /**
@@ -70,6 +79,11 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         //
+        $category->update([
+            'name'->request->name,
+            'slug' => str_slug($request->name)
+        ]);
+        return response('Updated',200);
     }
 
     /**
@@ -81,5 +95,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
+        $category->delete();
+        return redirect(null,200);
     }
 }
